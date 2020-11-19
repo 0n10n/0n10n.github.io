@@ -1,1 +1,15 @@
+title: 假装在努力的小馄饨
+email: 3241303132[#]qq[dot]com
+description: >- # 加油加油！
+#baseurl: "/jekyll" # the subpath of your site, e.g. /blog
+url: "/" 
+github_username:  0n10n
+
 theme: jekyll-theme-tactile
+
+
+plugins:
+  - jekyll-feed
+
+exclude:
+  - .misc/
