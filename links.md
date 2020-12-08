@@ -5,6 +5,8 @@
 - https://www.freebuf.com/
 - https://www.sec-wiki.com/news
 - https://github.com/ 
+- https://www.sec-in.com/
+- https://xz.aliyun.com/
 
 ## 二、漏洞报告
 
