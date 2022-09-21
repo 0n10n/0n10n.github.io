@@ -1,5 +1,5 @@
-- [第1章 Linux](linux.md)
-  - [1.1 Bash](bash.md#bash)
+- 第1章 Linuxs
+  - [1.1 Bash](bash.md)
 
 - [第2章 Windows](windows.md)
   - [2.1 Batch](windows-batch.md)
