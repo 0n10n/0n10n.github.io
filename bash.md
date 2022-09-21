@@ -4,7 +4,7 @@
 
 * 变量
 
-  ```bash
+```bash
   NAME="John"
   echo $NAME
   echo "$NAME"
@@ -405,5 +405,4 @@ fofacli 'domain=baidu.com' | xargs -n 1 --max-procs=3 -I{} bash -c "echo {} && w
 
 * 如何给函数传递参数？
   直接调用的时候给参数就行，函数中通过$1,$2..的方式获取参数。
-
 
