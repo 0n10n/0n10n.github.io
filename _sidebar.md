@@ -9,7 +9,7 @@
   - [3.2 靶机](playgroud.md)  
   
 - 第4章 应用相关
-
+  - [4.1 一句话编解码](encode.md)
     
 - 第n章 资料
   - [n.1 日常阅读](reading.md)
