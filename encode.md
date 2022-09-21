@@ -28,3 +28,11 @@ $ alias urldecode='python3 -c "import sys, urllib.parse as ul; \
 $ alias urlencode='python3 -c "import sys, urllib.parse as ul; \
     print (ul.quote_plus(sys.argv[1]))"'
 ```
+
+- 把文件用16进制显示出来
+```bash
+$ xxd file_name
+$ xxd file_name > file_name.dump #接着可以用文本编辑器随意修改文件内容
+$ xxd -r file_name.dump > file_name.new #结合上一条命令，得到修改后的二进制文件
+$ echo "436f6d7075746572486f70650a" | xxd -r -p > computerhope.txt #把一串16进制字符存成文件
+```
