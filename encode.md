@@ -35,4 +35,14 @@ $ xxd file_name
 $ xxd file_name > file_name.dump #接着可以用文本编辑器随意修改文件内容
 $ xxd -r file_name.dump > file_name.new #结合上一条命令，得到修改后的二进制文件
 $ echo "436f6d7075746572486f70650a" | xxd -r -p > computerhope.txt #把一串16进制字符存成文件
+$ echo -n "A" | xxd -p #打印出A字符的16进制表达
+```
+- 每隔两个字符，插入一个“%”符号
+```bash
+echo '10000000C988CBE0' | sed 's/../&:/g;s/:$//'
+```
+
+- 结合上面的xxd命令，可以得到一个对文件的url编码命令行
+```bash
+xxd -p gb2312.txt  |sed  's/../%&/g;s/:$//'
 ```
