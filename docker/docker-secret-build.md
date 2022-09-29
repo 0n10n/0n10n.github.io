@@ -3,7 +3,7 @@
 前情提要看这里“《[用ssh协议访问Github Repo，规避网络连接问题](github-ssh.md)》”。ssh方式访问github真是比https方式稳定好用多了（当然是在咱们这国情下）。自己机器里这么用特别方便，但这几天在热衷搞Dockerfile，就发现要在Docker里用ssh私钥就没那么方便了，毕竟搞Docker都是为了方便分享，总不能把私钥也打包进去吧，就琢磨了一下这事情：怎么在Docker里传递私密信息。
 
 从直觉上来说，在Docker里打包私密文件，好像可以先ADD私密文件，之后再执行删除，比如这样地写（留意最后一行删除文件的动作）：
-```dockerfile
+```bash
 FROM alpine:latest
 
 RUN apk add --update \
@@ -79,7 +79,7 @@ CMD ["-h"]
 Dockerfile里有两个镜像`golang:alpine3.16`和`alpine:3.16`。在`golang:alpine3.16`里做编译，再通过`alias`别名`builder`的引用，把gospider程序复制添加到最终需要的镜像里。
 
 上面例子里是直接复制了一个私钥文件，也可以通过 `--build-arg` 参数的方式，把私钥信息赋给用作编译环境的镜像。
-```
+```dockerfile
 ARG SSH_PRIVATE_KEY
 RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
 ```
@@ -104,7 +104,7 @@ $ sudo find  /var/lib/docker -name id_rsa
 $ DOCKER_BUILDKIT=1 docker build .
 ```
 或者编辑` /etc/docker/daemon.json `，加入
-```
+```json
 { "features": { "buildkit": true } }
 ```
 Buildkit 给docker build命令新增了一个叫 `--secret` 的参数。用  `--secret`  引用的资源，会以`tmpfs` 文件系统格式，挂载成位于 `/run/secrets` 目录下的一个临时文件，文件名就是指定的`id`,且这个临时文件，只存在于当前这个文件层 layer。
@@ -120,13 +120,13 @@ RUN --mount=type=secret,id=little_secret cat /run/secrets/little_secret
 
 然后在执行build命令的时候，就要对应地给这个设定的`id`，提供一个对应的文件（`src`），如：
 
-```
+```bash
 DOCKER_BUILDKIT=1 docker build --secret id=little_secret,src=/host/secret/file/path .
 ```
 
 可见，在Dockerfile和build命令里，要使用一直的配套的`id` 设定，把宿主机上包含隐秘信息的`src`文件，用安全的方式，临时地提供给某个容器的文件层使用。在容器里，还可以用`target`，把这个文件指定为特定目录下的文件。
 
-```
+```dockerfile
 RUN --mount=type=secret,id=little_secret ...
 RUN --mount=type=secret,id=little_secret,target=/target/path/to/secret ...
 ```
