@@ -1,5 +1,7 @@
 # Notes from (0O0O0)
 
+【2022/09/30】Docker里怎么传递私密（私钥）信息 [>> 阅读](docker/docker-secret-build.md)
+
 【2022/09/10】一句话脚本做编解码转化 [>> 阅读](encode.md)
 
 【2022/09/01】改用ssh协议访问Github Repo，规避网络连接问题 [>> 阅读](github-ssh.md)

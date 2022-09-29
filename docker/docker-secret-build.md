@@ -1,61 +1,105 @@
-# Docker里怎么传递私密信息
+# Docker里怎么传递私密（私钥）信息
 
-## Squash方式
+前情提要看这里“《[用ssh协议访问Github Repo，规避网络连接问题](github-ssh.md)》”。ssh方式访问github真是比https方式稳定好用多了（当然是在咱们这国情下）。自己机器里这么用特别方便，但这几天在热衷搞Dockerfile，就发现要在Docker里用ssh私钥就没那么方便了，毕竟搞Docker都是为了方便分享，总不能把私钥也打包进去吧，就琢磨了一下这事情：怎么在Docker里传递私密信息。
 
-从 1.13 开始，引入了一个新的 `--squash` 参数。
-parameter was added. It can be used to reduce the size of an image by removing files which are not present anymore, and reduce multiple layers to a single one between the origin and the latest stage. You’ll need to run the daemon with experimental features enabled to use it.
+从直觉上来说，在Docker里打包私密文件，好像可以先ADD私密文件，之后再执行删除，比如这样地写（留意最后一行删除文件的动作）：
+```dockerfile
+FROM alpine:latest
 
-This has also the convenient side effect, of removing files which were created and then deleted. Handy to get rid of files containing secret information which you don’t want to have around anymore. You tell docker to squash away layers when executing docker build:
+RUN apk add --update \
+  ca-certificates \
+  coreutils \
+  curl \
+  git \
+  openssl \
+  openssh \
+  openssh-client-common
 
+RUN mkdir /root/.ssh/
+ADD id_rsa  /root/.ssh/id_rsa
+
+RUN chmod 0600 /root/.ssh/id_rsa \
+&& touch /root/.ssh/known_hosts \
+&& ssh-keyscan github.com >> /root/.ssh/known_hosts
+
+RUN git clone git@github.com:/0n10n/d0ckfile
+RUN rm /root/.ssh/id_rsa
 ```
-$ docker build --squash [...]
+
+但这样得到的镜像，用如下命令：`docker history --no-trunc $image_name | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/bin/sh -c,RUN,g' | sed 's, && ,\n & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*\s*[kMG]*B\s*$,,g' | head -n -1`  能得到具体的每一步骤。
+
+使用以下命令，就能从Docker的文件系统中，把这个曾经删掉的文件再捞回来：
+
+```bash
+$ cd /var/lib/docker && find . |grep id_rsa
+
+./overlay2/999919b1e89a62d4f130fc48edb44ba16545d31e35dec718f04ea7f61065ae5c/diff/root/.ssh/id_rsa
+./overlay2/1d65d5d719697625f73351b528ff9e4d22ea85f704b6de6a63372377f0a686b6/diff/root/.ssh/id_rsa
+./overlay2/81f193a5e10ce357abb17b219aae1d68dd8ed0ecfe94b07f73377cd604c3a1fa/diff/root/.ssh/id_rsa
 ```
 
-This approach works, but it has a few potential downsides. If you make a mistake and push an image without squashing it, you risk leaking the thing you wanted to keep private. You will still see ARG values when viewing the history of the image. Also, you’re not making use of Docker layer caching as much as you could. There is a more elegant way by now - multi-stage builds.
+所以这种方式是不可靠的！只要是曾经被添加过的文件，依然还是会保存在Docker的文件系统里。
 
 ## 多阶段Build方式
 
-When working with multi-stage builds, you are building multiple Docker images in a single Dockerfile, but only the last one is the real result. The other ones are there to support it. Anything but the final image don’t leave any traces.
+多阶段build的方式，是在 Dockerfile 里设定多个Docker镜像，但只有最后一个镜像才是真正的Build成果。其他的镜像都是支撑最后一个镜像的，编译完成后前面的镜像就不再用了，在最终镜像里并不会留有前面镜像的印记。
 
-This is really convenient for handling secrets! You simply provide your private SSH key to one of the intermediate images, use it to install dependencies, download the data or clone a Git repository, and pass directories containing that data into your final image build process, while leaving the secret credentials safe and sound in the intermediate image.
+这种机制就非常适合保存私密信息。譬如把私钥在支撑用的镜像里，从github里下载完需要的数据和仓库，安装完需要的依赖程序后，把需要的内容复制到最后的镜像里，这样放在过渡用的镜像里的隐私信息如私钥就可以不用管啦。
 
-> As a sidenote: it’s a good idea to create dedicated SSH deploy keys for such tasks, which are disposable, can be disabled easily, only have read-access and don’t need a passphrase to unlock.
+比如下面的例子，用私钥通过ssh方式克隆一个仓库，编译完后，把得到的执行文件复制到最终的镜像里。第一个镜像里放入私钥，完成依赖环境的准备以及程序的编译；第二个镜像只需要获得编译出来的程序即可，不需要关心私钥的事情了。
 
-Here is an example of a multi-stage Dockerfile:
+```dockerfile
+FROM golang:alpine3.16 as builder
+RUN apk add --update \
+  ca-certificates \
+  curl \
+  git \
+  openssl \
+  openssh \
+  openssh-client-common
 
-```
-# this is our first build stage, it will not persist in the final image
-FROM ubuntu as intermediate
-
-# install git
-RUN apt-get update
-RUN apt-get install -y git
-
-# add credentials on build
-ARG SSH_PRIVATE_KEY
 RUN mkdir /root/.ssh/
-RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+ADD id_rsa  /root/.ssh/id_rsa
 
-# make sure your domain is accepted
-RUN touch /root/.ssh/known_hosts
-RUN ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
+RUN chmod 0600 /root/.ssh/id_rsa \
+&& touch /root/.ssh/known_hosts \
+&& ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-RUN git clone git@bitbucket.org:your-user/your-repo.git
+RUN git clone git@github.com:/jaeles-project/gospider@latest
+RUN cd gospider && export GOPROXY=https://proxy.golang.com.cn,direct && GO111MODULE=on go build .
 
-FROM ubuntu
-# copy the repository form the previous image
-COPY --from=intermediate /your-repo /srv/your-repo
-# ... actually use the repo :)
+FROM alpine:3.16
+RUN apk --no-cache add bash
+COPY --from=builder /gospider/gospider  /usr/local/bin/gospider
+
+ENTRYPOINT ["gospider"]
+CMD ["-h"]
 ```
 
-There are two images defined here. One of them is named “intermediate”, the final one doesn’t have a name. The “intermediate” image is referenced, and we’re copying the repository data over from it into the final image.
+Dockerfile里有两个镜像`golang:alpine3.16`和`alpine:3.16`。在`golang:alpine3.16`里做编译，再通过`alias`别名`builder`的引用，把gospider程序复制添加到最终需要的镜像里。
 
-The `SSH_PRIVATE_KEY` is passed when issuing the build command with `--build-arg` or in the build block of your docker-compose.yml file. That ARG variable is not used in the final image, the value will not be available using the *history* command.
+上面例子里是直接复制了一个私钥文件，也可以通过 `--build-arg` 参数的方式，把私钥信息赋给用作编译环境的镜像。
+```
+ARG SSH_PRIVATE_KEY
+RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
+```
+使用多阶段编译的另外一个好处，能极大地缩小了最后真正使用的镜像的体积。
 
-Using multi-stage builds also has the great side effect of **significantly** reducing the size of your final Docker images, as they don’t need to contain traces of Git and other build tools if used correctly.
+想知道这个中间文件到底是否存在，可以执行：
+```bash
+$ sudo find  /var/lib/docker -name id_rsa
+```
+如果搜出来的结果还有，说明中间镜像还存在。需要先执行 `docker rmi 中间镜像id` 后再搜索文件。
+
 
 ## 用Docker BuildKit的secret 参数
-用BuildKit方式build（https://docs.docker.com/develop/develop-images/build_enhancements/）:
+
+另一种是用Docker BuildKit方式。
+
+关于Docker BuildKit详见： https://docs.docker.com/develop/develop-images/build_enhancements/ 。
+
+启用BuildKit的方式：
+
 ```bash
 $ DOCKER_BUILDKIT=1 docker build .
 ```
@@ -63,16 +107,29 @@ $ DOCKER_BUILDKIT=1 docker build .
 ```
 { "features": { "buildkit": true } }
 ```
+Buildkit 给docker build命令新增了一个叫 `--secret` 的参数。用  `--secret`  引用的资源，会以`tmpfs` 文件系统格式，挂载成位于 `/run/secrets` 目录下的一个临时文件，文件名就是指定的`id`,且这个临时文件，只存在于当前这个文件层 layer。
+```dockerfile
+FROM alpine:latest
+
+RUN apk add --update \
+  ca-certificates curl
+  
+RUN --mount=type=secret,id=little_secret cat /run/secrets/little_secret
 
 ```
-export DOCKER_BUILDKIT=1
+
+然后在执行build命令的时候，就要对应地给这个设定的`id`，提供一个对应的文件（`src`），如：
+
+```
+DOCKER_BUILDKIT=1 docker build --secret id=little_secret,src=/host/secret/file/path .
 ```
 
-Docker BuildKit brought along cool new features. One of them, is the secret mount type can give a single RUN command access to one or multiple secrets without leaving behind traces inside of the file system if used right. You can specify a secret from a file when running your build command:
+可见，在Dockerfile和build命令里，要使用一直的配套的`id` 设定，把宿主机上包含隐秘信息的`src`文件，用安全的方式，临时地提供给某个容器的文件层使用。在容器里，还可以用`target`，把这个文件指定为特定目录下的文件。
 
-docker build --secret id=yoursecret,src=/host/secret/file/path
-You can give single RUN instructions access to this secret. By default this creates a file inside of /run/secrets/secretid, but you can also specify a target path of your choice.
+```
+RUN --mount=type=secret,id=little_secret ...
+RUN --mount=type=secret,id=little_secret,target=/target/path/to/secret ...
+```
 
-RUN --mount=type=secret,id=yoursecret ...
-RUN --mount=type=secret,id=yoursecret,target=/target/path/to/secret ...
-The file is created and cleaned up automatically so it won’t leave behind any traces in the final layer, unless you write the exact same data to disk yourself.
+这种文件在容器里的创建和清理都是自动的。
+
