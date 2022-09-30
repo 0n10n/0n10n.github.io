@@ -2,7 +2,7 @@
 
 最近打算把github用起来，但你懂的，我们伟大的Wall处处是绊脚石啊！这段提示最近把我看吐了...
 
-```
+```bash
 fatal: unable to access 'https://github.com/ineo6/hosts/': OpenSSL SSL_read: Connection was reset, errno 10054
 ```
 
@@ -26,7 +26,7 @@ fatal: unable to access 'https://github.com/ineo6/hosts/': OpenSSL SSL_read: Con
 
 再修改自己本地库的 `.git/config` 文件，把远程库的路径，从这种格式：
 
-```
+```ini
 [remote "origin"]
 	url = https://github.com/ineo6/hosts
 	fetch = +refs/heads/*:refs/remotes/origin/*
@@ -34,7 +34,7 @@ fatal: unable to access 'https://github.com/ineo6/hosts/': OpenSSL SSL_read: Con
 
 改为：
 
-```
+```ini
 [remote "origin"]
 	url = git@github.com:/ineo6/hosts
 	fetch = +refs/heads/*:refs/remotes/origin/*

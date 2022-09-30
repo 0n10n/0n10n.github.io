@@ -7,13 +7,13 @@
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
-     <link rel="stylesheet" href="./_assets/css/prism-xonokai.css">
+  <!--link rel="stylesheet" href="./_assets/css/prism-xonokai.css"-->
     <!--link rel="stylesheet" href="./_assets/css/styles.css"-->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar.min.css" />
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-sidebar-collapse/dist/sidebar-folder.min.css" />	
   
-  <link rel="stylesheet" href="https://prismjs.com/assets/style.css" />
-  <link rel="stylesheet" href="https://prismjs.com/themes/prism.css" data-noprefix />
+  <!--link rel="stylesheet" href="https://prismjs.com/assets/style.css" />
+  <link rel="stylesheet" href="https://prismjs.com/themes/prism.css" data-noprefix /-->
   <link rel="stylesheet" href="https://prismjs.com/plugins/line-numbers/prism-line-numbers.css" data-noprefix />
   
 </head>
@@ -40,7 +40,7 @@
           }
       ],	
       name: '点滴记录',
-      repo: '',
+      repo: '0n10n/0n10n.github.io',
       loadSidebar: true,
 	  noEmoji: true,
       alias: {
@@ -48,17 +48,8 @@
       },
     subMaxLevel: 3,
     sidebarDisplayLevel: 1,
-      tabs: {
-        persist    : true,      // default
-        sync       : true,      // default
-        theme      : 'classic', // default
-        tabComments: true,      // default
-        tabHeadings: true       // default
-      },
 
-	
     search: 'auto', 
-	  
     search: {
       maxAge: 86400000, 
       paths: 'auto',
@@ -79,16 +70,18 @@
 
     }
   </script>
+  
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
-
-
-  <script src="https://prismjs.com/prism.js"></script>
+    
+  <!--script src="https://prismjs.com/prism.js"></script-->
   <script src="https://prismjs.com/plugins/line-numbers/prism-line-numbers.js"></script>
-  <script src="//unpkg.com/prismjs/components/prism-python.min.js"></script>
   <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-batch.min.js"></script>  
   <script src="//unpkg.com/prismjs/components/prism-docker.min.js"></script>
+  <script src="//unpkg.com/prismjs/components/prism-ini.min.js"></script>  
+  <script src="//unpkg.com/prismjs/components/prism-java.min.js"></script>    
+  <script src="//unpkg.com/prismjs/components/prism-json.min.js"></script>      
+  <script src="//unpkg.com/prismjs/components/prism-python.min.js"></script>
 	
 <script src="./res/search.min.js"></script>
 <script src="./res/docsify-sidebar-collapse.min.js"></script>
@@ -98,9 +91,7 @@
 <script src="//unpkg.com/docsify-mermaid@latest/dist/docsify-mermaid.js"></script>
 <script>mermaid.initialize({ startOnLoad: true });</script>	
   
-
-  
-  <style>
+<style>
     :root {
       --docsifytabs-border-color: #ededed;
       --docsifytabs-tab-highlight-color: purple;
@@ -121,6 +112,6 @@
     /* Fix paddings to align with code.*/
     padding: 2.2em 0; /* Same as code block */
 }
-  </style>
+</style>
 </body>
 </html>

@@ -111,8 +111,7 @@ Buildkit 给docker build命令新增了一个叫 `--secret` 的参数。用  `--
 ```dockerfile
 FROM alpine:latest
 
-RUN apk add --update \
-  ca-certificates curl
+RUN apk add --update ca-certificates curl
   
 RUN --mount=type=secret,id=little_secret cat /run/secrets/little_secret
 
@@ -121,7 +120,7 @@ RUN --mount=type=secret,id=little_secret cat /run/secrets/little_secret
 然后在执行build命令的时候，就要对应地给这个设定的`id`，提供一个对应的文件（`src`），如：
 
 ```bash
-DOCKER_BUILDKIT=1 docker build --secret id=little_secret,src=/host/secret/file/path .
+$ DOCKER_BUILDKIT=1 docker build --secret id=little_secret,src=/host/secret/file/path .
 ```
 
 可见，在Dockerfile和build命令里，要使用一直的配套的`id` 设定，把宿主机上包含隐秘信息的`src`文件，用安全的方式，临时地提供给某个容器的文件层使用。在容器里，还可以用`target`，把这个文件指定为特定目录下的文件。
