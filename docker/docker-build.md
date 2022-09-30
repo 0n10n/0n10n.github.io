@@ -29,7 +29,7 @@ https://hub.docker.com/search?image_filter=official%2Cstore%2Copen_source&q=
 
 选个尽量小的就是。
 
-缺点: 越少的镜像, 自动要动手的地方可能就越多.
+缺点: 越少的镜像, 要动手调整的地方就越多.
 
 ### 应用的具体性质
 
