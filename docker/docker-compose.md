@@ -15,3 +15,5 @@ https://didokun.medium.com/run-drupal-8-with-composer-docker-compose-nginx-maria
 https://github.com/mogtofu33/docker-compose-drupal
 
 https://www.linode.com/docs/guides/drupal-with-docker-compose/
+
+https://learn.microsoft.com/en-us/visualstudio/docker/tutorials/tutorial-multi-container-app-mysql

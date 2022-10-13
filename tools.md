@@ -30,7 +30,10 @@ https://github.com/r0eXpeR/redteam-tools 红队作战中的一些脚本分享。
 
 ## HTTP相关
 
+https://github.com/postmanlabs/httpbin HTTP Request & Response Service, written in Python + Flask.
 
+## Bruteforce
+https://github.com/galkan/crowbar OpenVPN/RDP/SSH/VNC 协议
 
-- https://github.com/postmanlabs/httpbin HTTP Request & Response Service, written in Python + Flask.
-- 
+## 偷取密码
+https://github.com/cckuailong/HackChrome 针对Chrome
