@@ -1,8 +1,8 @@
 # 常见的多阶段组合的镜像
 
-初始镜像主要用于中间过渡的build。
+初始镜像主要用于编译所需的程序或者库，所以是过渡性质的，最后并不需要。
 
-### Maven+Java Apps
+### 1、Maven+Java Apps
 ```dockerfile
 FROM maven AS build
 WORKDIR /app
@@ -12,8 +12,8 @@ RUN mvn package
 FROM tomcat
 COPY --from=build /app/target/file.war /usr/local/tomcat/webapps
 ```
-### Java Compile
-```
+### 2、Java Compile
+```dockerfile
 FROM openjdk:8-jre-alpine
 
 # JAR_FILE is an argument value from the maven representation.
@@ -25,7 +25,7 @@ EXPOSE 8800
 # run application with this command line 
 CMD ["/usr/bin/java", "-jar", "-Dspring.profiles.active=default", "/app.jar"]
 ```
-### Go Apps+Alpine
+### 3、Go Apps+Alpine
 ```dockerfile
 FROM golang:alpine3.16 as builder
 
@@ -43,7 +43,7 @@ ENTRYPOINT ["gospider"]
 CMD ["-h"]
 ```
 
-### React example
+### 4、React  Example
 ```dockerfile
 FROM node:12 AS build
 WORKDIR /app
