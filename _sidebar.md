@@ -16,7 +16,7 @@
     - [4.2.3 Docker 命令](docker/docker-commands.md)  
 	- [4.2.4  docker -compose](docker/docker-compose.md)  
     - [4.2.5  Docker 私密信息传递](docker/docker-secret-build.md)  
-
+    - [4.2.6  常见的多阶段镜像组合](docker/multi-stages-images.md)  
 - 第5章 其他
   - [5.1 ssh访问Github ](github-ssh.md)
 
