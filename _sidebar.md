@@ -14,10 +14,10 @@
 - 第3章 Web漏洞
   - [3.1 各种漏洞](vuls/Readme.md)
     - [3.1.1 SSRF](vuls/ssrf.md)
-  - [3.2 Java](vuls/Readme.md)
-    - [3.2.1 SSRF](vuls/ssrf.md)
-  - [3.3  PHP](vuls/Readme.md)
-    - [3.3.1 SSRF](vuls/ssrf.md)
+  - [3.2 Java](java/Readme.md)
+    - [3.2.1 反序列化漏洞](java/deserialization.md)
+  - [3.3  PHP](php/Readme.md)
+    - [3.3.1 反序列化漏洞](php/php-serialization.md)
   - [3.4 靶机](playgroud.md)  
   
 - 第4章 应用相关
