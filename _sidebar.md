@@ -1,4 +1,4 @@
-- 第1章 Linuxs
+- 第1章 Linux
   - [1.1 Bash](bash/Readme.md)
     - [1.1.1 基础知识点](bash/bash-base.md)  
 	- [1.1.2 Bash 命令行相关的特殊参数](bash/bash-line-command-arguments.md)
@@ -14,8 +14,11 @@
 - 第3章 Web漏洞
   - [3.1 各种漏洞](vuls/Readme.md)
     - [3.1.1 SSRF](vuls/ssrf.md)
-	
-  - [3.2 靶机](playgroud.md)  
+  - [3.2 Java](vuls/Readme.md)
+    - [3.2.1 SSRF](vuls/ssrf.md)
+  - [3.3  PHP](vuls/Readme.md)
+    - [3.3.1 SSRF](vuls/ssrf.md)
+  - [3.4 靶机](playgroud.md)  
   
 - 第4章 应用相关
   - [4.2 Docker](docker/Readme.md)
