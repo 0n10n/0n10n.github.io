@@ -1,5 +1,6 @@
 - 第1章 Linuxs
   - [1.1 Bash](bash.md)
+    - [1.1.1 一句话编解码](encode.md)
 
 - [第2章 Windows](windows.md)
   - [2.1 Batch](windows-batch.md)
@@ -9,14 +10,11 @@
   - [3.2 靶机](playgroud.md)  
   
 - 第4章 应用相关
-  - [4.1 一句话编解码](encode.md)
-  - 4.2  Docker
+  - 4.2  [Docker](docker/Readme.md)
     - [4.2.1  基础镜像选择建议](docker/docker-build.md)  
-    - [4.2.2  Docker 速查表](docker/docker-cheatsheet.md)  
-    - [4.2.3 Docker 命令](docker/docker-commands.md)  
-	- [4.2.4  docker -compose](docker/docker-compose.md)  
-    - [4.2.5  Docker 私密信息传递](docker/docker-secret-build.md)  
-    - [4.2.6  常见的多阶段镜像组合](docker/multi-stages-images.md)  
+    - [4.2.2  Docker 私密信息传递](docker/docker-secret-build.md)  
+    - [4.2.3  常见的多阶段镜像组合](docker/multi-stages-images.md)  
+	
 - 第5章 其他
   - [5.1 ssh访问Github ](github-ssh.md)
 
