@@ -12,7 +12,9 @@
   
 
 - 第3章 Web漏洞
-  - [3.1 SSRF](ssrf.md)
+  - [3.1 各种漏洞](vuls/Readme.md)
+    - [3.1.1 SSRF](vuls/ssrf.md)
+	
   - [3.2 靶机](playgroud.md)  
   
 - 第4章 应用相关
@@ -23,7 +25,8 @@
 	
 - 第5章 其他
   - [5.1 ssh访问Github ](github-ssh.md)
-
+  - [5.2 调试http/https应用](http-debug.md)
+  
 - 第n章 资料
   - [n.1 日常阅读](reading.md)
   - [n.2 漏洞披露](vulrepo.md)

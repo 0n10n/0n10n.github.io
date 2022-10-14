@@ -4,3 +4,7 @@ https://youki992.github.io/PHP-Bypass-Waf
 
 ## 在线PHP工具
 https://c.runoob.com/compile/1/
+
+https://github.com/guardrailsio/awesome-php-security
+
+https://geekflare.com/php-security-scanner/

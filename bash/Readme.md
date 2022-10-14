@@ -5,10 +5,7 @@
 
 - https://www.gnu.org/software/bash/manual/bash.html Manual
 
-
-## To Read
-
-- https://tldp.org/LDP/abs/html/
+- https://tldp.org/LDP/abs/html/ Advanced Bash-Scripting Guide
 
 ## Set
 - https://linuxhint.com/set-command-bash/ 
