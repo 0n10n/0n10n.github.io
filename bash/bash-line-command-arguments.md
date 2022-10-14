@@ -1,19 +1,25 @@
-Here, we are going to see what are the special Parameters of the shell script. Before that first, let’s understand what is parameters in the shell. The parameter is the entity that stores the value. The **variables** are the parameters that are defined by the user to use in that specific shell script. And the **Special parameters** are the read-only variables that are predefined and maintained by the shell. Now let’s see what are the Special parameters in the bash shell.
+# Bash 命令行相关的特殊参数
 
-| S.No | Special Parameters | Description                                                  |
-| :--- | :----------------- | :----------------------------------------------------------- |
-| 1    | **$#**             | This parameter represents the number of arguments passed to the shell script. |
-| 2    | **$0**             | This parameter represents the script name.                   |
-| 3    | **$i**             | This parameter represents the ith argument passed to the shell script like $1,$2 |
-| 4    | **$\***            | This parameter gives all arguments passed to the shell script separated by the space. |
-| 5    | **$!**             | This parameter gives PID of the last background running process. |
-| 6    | **$?**             | This parameter represents the exit status of the last command that executed. The 0 code represents success and 1 represents failure. |
-| 7    | **$_**             | This parameter gives the last argument provided to the previous command that executed. |
-| 8    | **$$**             | This parameter gives the PID of the current shell.           |
-| 9    | **$@**             | This parameter holds all argument passed to the script and treat them as an array. It is similar to the **$\*** parameter |
-| 10   | **$-**             | This parameter represents the current flags set in your shell .**himBH** are the flags in bash shell.**Where:**H – histexpandm – monitorh – hashallB – braceexpandi – interactive |
+收集一下Bash命令行相关的常见变量。几个名词解释：
 
-**Now let’s see the script which demonstrates all Special Parameters.**
+- 参数（parameter）是存放数值的实体；
+- 变量（variables）是特定shell脚本里，由用户定义的参数。
+- 特殊参数（Special parameters）是由shell预定义和维护的只读变量。
+
+| 序号 | 特殊参数名称 | 描述                                                         |
+| :--- | :----------- | :----------------------------------------------------------- |
+| 1    | **$#**       | 代表传给shell脚本的参数数量                                  |
+| 2    | **$0**       | 代表shell脚本的文件名                                        |
+| 3    | **$i**       | 代表传给shell的第几个参数：$1,$2                             |
+| 4    | **$\***      | 代表传给脚本的全部参数                                       |
+| 5    | **$!**       | 代表在背景运行的最后一个程序的 PID                           |
+| 6    | **$?**       | 最后一条命令运行后的退出状态码。0代表成功；1代表失败         |
+| 7    | **$_**       | 上一条命令使用的最后一个参数                                 |
+| 8    | **$$**       | 当前脚本的 PID                                               |
+| 9    | **$@**       | 当前收到的所有参数的数组形式。类似 `$*`                      |
+| 10   | **$-**       | 当前set命令设置的选项值。具体参见：https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin 里的每个 `-选项` 。如 ` set -e && echo $- ` 会打印出 `ehB`。 `e`就来自 `-e`，`hB`来自默认值，代表的含义见上面的文档。 |
+
+包含上述各种特殊参数的脚本示例：
 
 ```
 #!/bin/bash
@@ -30,38 +36,28 @@ echo "Flags are set in the shell: $-"
 
 ![](https://media.geeksforgeeks.org/wp-content/uploads/20210418152230/202104181521.png)
 
-**Special variables in bash:**
 
-```
-$@- All arguments.
-$#- Number of arguments.
-$0- Filename.
-$1, $2, $3, $4 ... - Specific arguments.
-```
+#### 应用举例
 
-**Approach**
-
-- If the number of arguments is 0, end the program.
-- If not zero, then
-  - Initialize a variable **maxEle** with first argument.
-  - Loop over all the arguments. Compare each argument with **maxEle** and update it if the argument is greater.
+- 如果参数的数量是 0，结束程序。
+- 如果不是0
+  - 把第一个参数的值给 maxEle
+  - 循环所有的参数。每个参数都和 `maxEle`对比大小，如果该参数更大，就替换掉 `maxEle` 的值。
 
 ```bash
-#Check if the number of arguments passed is zero
+# 检查传进来的参数个数是否为0
 if [ "$#" = 0 ]
 then
-    #Script exits if no
-    #arguments passed
+    #如果没有参数，退出程序
     echo "No arguments passed."
     exit 1
 fi
   
-#Initialize maxEle with 
-#the first argument
+#用第一个参数初始化maxEle的值
+
 maxEle=$1
   
-#Loop that compares maxEle with the 
-#passed arguments and updates it
+#挨个循环各个参数，把大的数字赋给 maxEle 
 for arg in "$@"
 do
     if [ "$arg" -gt "$maxEle" ]

@@ -1,6 +1,6 @@
-# 基础知识
+# 基本知识点
 
-## 背景知识
+## Bash基础
 
 * 变量
 
@@ -9,7 +9,7 @@
   echo $NAME
   echo "$NAME"
   echo "${NAME}!"
-  ```
+```
 
 * 字符串引号
 
@@ -63,11 +63,11 @@
 
 * 注释
 
-```bash
-单行注释用#符号
-
-多行注释用冒号空格单引号 : '任意换行'
-```
+  ```bash
+  单行注释用#符号
+  
+  多行注释用冒号空格单引号 : '任意换行'
+  ```
 
 ## 字符运算
 
@@ -327,7 +327,7 @@ python hello.py &>/dev/null    # stdout and stderr to (null)
 python hello.py < foo.txt # 读取内容
 ```
 
-# 任务场景
+## 任务场景
 
 * 生成随机数：
   ```bash
@@ -363,7 +363,7 @@ file=myfile_$(date +"%Y%m%d%H%M%S")
 fofacli 'domain=baidu.com' | xargs -n 1 --max-procs=3 -I{} bash -c "echo {} && wget {}"
 ```
 
-# 常见问题
+## 常见问题
 
 * -e -f -d的区别是什么？
   -e是判断文件是否存在，包含-f和-d；-f只判断普通文件存在，-d只判断目录存在
