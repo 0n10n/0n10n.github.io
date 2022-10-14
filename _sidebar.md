@@ -5,8 +5,11 @@
     - [1.1.3 一句话编解码](encode.md)
 
 
-- [第2章 Windows](windows.md)
-  - [2.1 Batch](windows-batch.md)
+- [第2章 Windows](windows/Readme.md)
+  - [2.1 Batch](windows/windows-batch.md)
+  - [2.2 自启动](windows/windows-startup.md)  
+  - [2.3 有用的命令](windows/windows-commands.md)  
+  
 
 - 第3章 Web漏洞
   - [3.1 SSRF](ssrf.md)
