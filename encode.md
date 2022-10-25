@@ -1,5 +1,17 @@
 ## 编解码命令行使用
 
+- 打印字符串的16进制编码：
+```bash
+# 用空格分隔
+$ echo -n "Hello" | od -A n -t x1
+#运行结果： 48 65 6c 6c 6f
+```
+```bash
+# 不用空格分隔
+$ echo -n "Hello" | od -A n -t x1 | sed 's/ //g'
+#运行结果：48656c6c6f
+```
+
 - 把一个图片（其实任何文件都可以啦！）编码成Base64字符串：
 ```bash
 $ base64 -w 0 $pic_file
