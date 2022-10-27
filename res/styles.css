@@ -16,13 +16,24 @@
   background-color: #3f3f3f;
 }
 
-td, tr:nth-child(odd) {
-	background-color: darkgray;
+	
+.markdown-section th {
+  background-color: #2E2E2E;
+  color: #d6d6d6;
 }
 
-td, tr:nth-child(even) {
-	background-color: lightgray;
+.markdown-section tr:nth-child(even) {
+  background-color: #2E2E2E;
+  color: #657b83;
 }
-		
 
+.markdown-section tr:nth-child(odd) {
+  background-color:#657b83;
+  color: #282828;
+}
 
+.anchor:hover {
+  text-decoration: none;
+  color: #e87d3e; 
+  background-color: #e87d3e; 
+}
