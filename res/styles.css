@@ -15,3 +15,14 @@
 .sidebar, .sidebar-toggle {
   background-color: #3f3f3f;
 }
+
+tr:nth-child(odd) {
+	background-color: darkgray;
+}
+
+tr:nth-child(even) {
+	background-color: lightgray;
+}
+		
+
+
