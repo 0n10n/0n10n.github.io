@@ -97,7 +97,7 @@ $((RANDOM%=200))  # Random number 0..200
 * 基础循环
 ```bash
 for i in /etc/rc.*; do
-echo $i
+  echo $i
 done
 ```
 * 死循环
@@ -109,7 +109,7 @@ done
 * 指定范围
 ```bash
 for i in {1..3}; do
-echo "Welcome $i"
+  echo "Welcome $i"
 done
 ```
 ```

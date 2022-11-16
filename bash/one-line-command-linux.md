@@ -15,14 +15,21 @@ LS_COLORS="ow=01;36;40" && export LS_COLORS
 ```
 ### git提交忽略文件
 
-```
+```bash
 git config --global core.excludesfile ~/.gitignore
 ```
 
 ### 移动指定后缀到目录下
 
-```
+```bash
+##{}代表前面一个命令的返回结果
 find . -name "*.log" -exec mv {} ../test \;` `find ./ -name '*.log' | xargs cp -t test
+```
+### 获取几天/小时前/后的时间点
+```bash
+date --date="1 day ago" +"%Y-%m-%d %H:%M:%S " #一天前的时间
+date --date="30 minutes ago" +"%Y-%m-%d %H:%M:%S "  #30分钟前
+date --date="-1 day ago" +"%Y-%m-%d %H:%M:%S " #一天后的时间
 ```
 
 ### 网络防火墙开放端口
