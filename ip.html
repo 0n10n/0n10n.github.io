@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your ip is ... </title>
+  <style>
+    /* 基本样式 */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* 自适应样式 */
+    .container {
+      width: 100%;
+      max-width: 1200px; /* 设置最大宽度 */
+      margin: 0 auto; /* 居中对齐 */
+      padding: 20px;
+    }
+
+    /* 示例内容样式 */
+    h1 {
+      text-align: center;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p id="ip-address">正在获取 IP 地址...</p>
+  </div>
+
+  <script>
+    // 使用 fetch 获取 IP 地址
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        const ipAddress = data.ip;
+        const ipAddressElement = document.getElementById('ip-address');
+        ipAddressElement.textContent = `当前访问者的 IP 地址：${ipAddress}`;
+      })
+      .catch(error => {
+        console.error('获取 IP 地址时出错:', error);
+      });
+  </script>
+</body>
+</html>
