@@ -1,5 +1,7 @@
 # Notes from (0O0O0)
 
+【2024/05/09】书签几个AI [>> 阅读](ai.md)
+
 【2022/09/30】Docker基础镜像选择建议 [>> 阅读](docker/docker-build.md)
 
 【2022/09/30】Docker里怎么传递私密（私钥）信息 [>> 阅读](docker/docker-secret-build.md)
