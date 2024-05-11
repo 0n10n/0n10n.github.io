@@ -1,5 +1,7 @@
 # Notes from (0O0O0)
 
+【2024/05/11】几个日语单词查询地址 [>> 阅读](japanese.md)
+
 【2024/05/09】书签几个AI [>> 阅读](ai.md)
 
 【2022/09/30】Docker基础镜像选择建议 [>> 阅读](docker/docker-build.md)
