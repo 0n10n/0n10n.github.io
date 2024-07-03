@@ -6,4 +6,5 @@
 |通义      |https://tongyi.aliyun.com/          |阿里      |
 |星火      |https://xinghuo.xfyun.cn/           |讯飞      |
 |POE       |https://poe.com/                    |QUORA     |
+|AI工具集  |https://ai-bot.cn/                  |网络     |
 
